@@ -11,13 +11,13 @@ const Register = () => {
 
     const registerUser = async (event) => {
         event.preventDefault()
-        // const body = {
-        //     name: name,
-        //     email: email,
-        //     password: password
-        // }
-        // const response = await axios.post('https://localhost:5000/register', body)
-        // const data = await response.data
+        const body = {
+            name: name,
+            email: email,
+            password: password
+        }
+        const response = await axios.post('https://localhost:5000/register', body)
+        const data = await response.data
 
         const response = await fetch('http://localhost:5000/register', {
 			method: 'POST',

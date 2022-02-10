@@ -3,6 +3,20 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 const Table = () => {
+    //post
+    const [topic, setTopic] = useState('')
+    const [description, setDescription] = useState('')
+    const [category, setCategory] = useState('')
+
+    const postData = (e) => {
+        e.preventDefault();
+        axios.post('url', {
+            topic,
+            description,
+            category
+        }).then(res => console.log('posting..', res))
+            .catch(err => console.log(err))
+    }
     //get post
     const [post, setPost] = useState()
     const [show, setShow] = useState(false)
@@ -10,8 +24,9 @@ const Table = () => {
     useEffect(() => {
         axios.get('http://localhost:5000/posts/:id')
             .then(res => {
+                console.log("Getting data", res.data)
                 setPost(res.data)
-            })
+            }).catch(err => console.log(err))
     }, [])
     //delete post
     const deletePost = () => {
@@ -37,22 +52,22 @@ const Table = () => {
                     <form>
                         <div class="form-group">
                             <label for="topic">Topic</label>
-                            <input type="text" class="form-control" id="topic" placeholder="Topic"/>
-                                
+                            <input type="text" class="form-control" id="topic" placeholder="Topic" value={topic} />
+
                         </div>
                         <div class="form-group">
                             <label for="description">Topic</label>
-                            <input type="text" class="form-control" id="description" placeholder="Description"/>
-                                
+                            <input type="text" class="form-control" id="description" placeholder="Description" value={description} />
+
                         </div>
                         <div class="form-group">
                             <label for="category">Topic</label>
-                            <input type="text" class="form-control" id="category"  placeholder="Category"/>
-                                
+                            <input type="text" class="form-control" id="category" placeholder="Category" value={category} />
+
                         </div>
-                        
-                        
-                        <button type="submit" class="btn btn-primary">Submit</button>
+
+
+                        <button type="submit" class="btn btn-primary" onClick={postData}>Submit</button>
                     </form>
                     : null
             }
@@ -74,7 +89,7 @@ const Table = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* {post.map(posts,index =>{ */}
+                    {/* {post.map(post,index =>{ */}
                     <tr>
                         <td>Dummy</td>
                         <td>Dummy</td>
@@ -94,7 +109,7 @@ const Table = () => {
                             </button>&nbsp
                             <button className="btn btn-danger"
                                 onClick={deletePost}
-                                
+
                             >
                                 Delete
                             </button>&nbsp

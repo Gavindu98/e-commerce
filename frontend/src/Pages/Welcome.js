@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import jwt from 'jsonwebtoken'
 import { useHistory } from 'react-router-dom'
 import '../App.css'
-import Card from '../Components/card'
+import axios from 'axios'
+//import Card from '../Components/card'
 
 const Welcome = () => {
 	// const history = useHistory()
@@ -29,7 +30,29 @@ const Welcome = () => {
 	// 	localStorage.removeItem('token')
 	// 	history.replace('/login')
 	// }
-
+	//called post
+		// constructor(props){
+		//super(props);
+		// super(props);
+		// this.state={
+		// 	posts:[]
+		//};
+		//}
+	// componentDidMount=()=>{
+	// 	this.retrivePosts();
+	// }	
+	
+	//get request
+	// const retrivePosts =() =>{
+	// 	axios.get("http://localhost:5000/posts").then(res =>{
+	// 		if(res.data.success){
+	// 			this.useState({
+	// 				posts:res.data.existingPosts
+	// 			});
+	// 			console.log(this.state.posts)
+	// 		}
+	// 	});
+	// }
 	return (
 		<div>
 			<div>
@@ -48,7 +71,46 @@ const Welcome = () => {
 			}
 			
 			<div className='card-container'>
-				<Card/>
+				
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Id</th>	
+							<th scope="col">Item Topic</th>	
+							<th scope="col">Description</th>	
+							<th scope="col">Category</th>	
+							<th scope="col">price</th>	
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+						<body>
+						{/* {this.state.posts.map(posts,index =>{ */}
+							<tr>
+								<td>Dummy</td>
+								<td>Dummy</td>
+								<td>Dummy</td>
+								<td>Dummy</td>
+								<td>Dummy</td>
+								{/* <td scope="row">{index+1}</td>
+								<td scope="row">{posts.topic}</td>
+								<td scope="row">{posts.description}</td>
+								<td scope="row">{posts.category}</td>
+								<td scope="row">{posts.price}</td> */}
+								<td>
+									<a className="btn btn-warning" href="#">
+										Edit
+									</a>
+									<a className="btn btn-danger" href="#">
+										Delete
+									</a>
+								</td>
+							</tr>
+						{/* })} */}
+						</body>
+					
+				</table>
+				
+				
 				<input 
 					
 					type="submit"
@@ -58,16 +120,7 @@ const Welcome = () => {
 			<div>
 				<p>Registered Customers</p>
 			</div>
-			{
-				//End Customer
-			}
-			{
-				//Start Admin
-			}
-
-			{
-				//End Admin
-			}
+			
 			<input 
 				type="submit" 
 				value="Logout" 

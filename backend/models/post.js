@@ -1,11 +1,23 @@
-import mongoose  from "mongoose";
+const mongoose = require('mongoose')
+
+const Schema = mongoose.Schema
 
 const Post = new mongoose.Schema(
     {
-        topic: { type: 'string', required: true },
-        description: { type: 'string', required: true },
-        category: { type: 'string', required: true },
+        topic: {
+            type: String,
+            required: true
+        },
+        description: {
+            type: String,
+            required: true
+        },
+        category: {
+            type: String,
+            required: true
+        }
     }
 )
+const ProductItem = mongoose.model("ProductItem", Post)
 
-export default mongoose.model('ProductItems', Post)
+module.exports = ProductItem

@@ -1,11 +1,20 @@
-import express from 'express'
-import cors from 'cors'
-import mongoose from 'mongoose'
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcryptjs'
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require('cors');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("cryptjs");
 import 'dotenv/config'
 
-import User from './models/user.js'
+
+// import routes
+const postRoutes = require('./routes/posts');
+const userRoutes = require('./routes/user');
+
+//app middleware
+app.use(bodyParser.json());
+app.use(postRoutes);
+app.use(userRoutes);
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -13,39 +22,13 @@ const PORT = process.env.PORT || 5000
 app.use(cors())
 app.use(express.json())
 
-mongoose.connect('mongodb://localhost:27017/login-register')
+const DB_URL = 'mongodb+srv://gavindu01:gavindu1998@cluster0.imj4b.mongodb.net/ecommerce?retryWrites=true&w=majority';
 
-app.post('/register', async (req, res) => {
-    try {
-        const newPassword = await bcrypt.hash(req.body.password, 10)
-         await User.create({
-             name: req.body.name,
-             email: req.body.name,
-             password: newPassword
-         })
-         res.json({ status: 'Ok'})
-     } 
-        catch (err) {
-            res.json({ status: 'error', error: err.message})
-        }
+mongoose.connect(DB_URL)
+.then(() => {
+    console.log('DB Connected');
 })
+.catch((err) => console.log('DB connection error', err))
 
-app.post('/login', async (req, res) => {
-    const user = await User.findOne({ email: req.body.email})
-    if (!user) return { status: 'error', error: 'Invalid Login'}
-    const isPasswordValid = await bcrypt.compare(req.body.password, user.password)
-    if (isPasswordValid) {
-        const token = jet.sign(
-            {
-                name: user.name,
-                email: user.email
-            },
-            'secret123'
-        )
-        return res.json({ status: 'Ok', user: token})
-    } else {
-        return res.json({ status: 'error', user: false})
-    }
-})
 
 app.listen(PORT, () => console.log(`Server is listening to port ${PORT}`))

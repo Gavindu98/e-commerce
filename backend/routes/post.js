@@ -21,7 +21,7 @@ router.post('/post/save',  (req, res) => {
     }
 });
 
-
+//Get Post Data
 router.get('/posts', async (req, res) => {
     try {
         Posts.find().exec((err, posts) => {
